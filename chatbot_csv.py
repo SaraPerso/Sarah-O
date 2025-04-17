@@ -19,6 +19,47 @@ def get_best_answer(question, df):
 
 st.set_page_config(page_title="Chatbot 1MCVA", layout="centered")
 
+from PIL import Image
+
+# Charger le logo
+logo = Image.open("robot.png")
+
+# Afficher le logo à gauche
+st.columns([0.2, 0.8])[0].image(logo, width=100)
+
+st.markdown("""
+    <style>
+        .stApp {
+            background-color: #f0f2f6;
+        }
+        .main-title {
+            color: #1f4e79;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+        .sub-title {
+            color: #444;
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown("<div class='main-title'>🤖 Bienvenue sur BotPro – Le chatbot du cours de commerce</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub-title'>Pose une question sur le cours et reçois une réponse instantanée !</div>", unsafe_allow_html=True)
+
+# 🎬 Page d'accueil : bouton pour démarrer
+if "started" not in st.session_state:
+    st.session_state.started = False
+
+if not st.session_state.started:
+    if st.button("🚀 Commencer le chatbot"):
+        st.session_state.started = True
+    st.stop()
+    
 # ✅ Correction : remplacer 'body' par '.stApp' pour Streamlit
 st.markdown(
     """
@@ -32,7 +73,7 @@ st.markdown(
 )
 
 st.markdown("<h1 style='color:white;'>🤖 Explorez le Commerce avec BotPro</h1>", unsafe_allow_html=True)
-st.write("Pose ta question sur le cours 👇")
+st.write("Pose ta question 👇")
 
 df = load_data()
 user_question = st.text_input("Ta question ici :")
