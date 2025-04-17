@@ -109,16 +109,6 @@ st.markdown(
     f'<div class="response-box">{reponse}</div>',
     unsafe_allow_html=True
 )
-# Signature personnalisée en bas à droite
-st.markdown(
-    """
-    <div style='text-align: right; font-size: 0.9em; color: white; margin-top: 30px;'>
-        Réalisé par <strong>Sarah Ouziel</strong> © 2025
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 # Footer avec message + lien Digipad
 st.markdown(
     """
@@ -127,6 +117,16 @@ st.markdown(
         💪 Bon courage pour tes révisions !<br><br>
         👉 <a href="https://digipad.app/p/847630/15248ba9144b5" target="_blank" style="color:white; font-weight:bold;">
         Accède ici à ton Digipad 📚</a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Signature personnalisée en bas à droite
+st.markdown(
+    """
+    <div style='text-align: right; font-size: 0.9em; color: white; margin-top: 30px;'>
+        Réalisé par <strong>Sarah Ouziel</strong> © 2025
     </div>
     """,
     unsafe_allow_html=True
