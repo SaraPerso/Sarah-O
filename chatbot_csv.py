@@ -33,14 +33,14 @@ st.markdown("""
             background-color: #f0f2f6;
         }
         .main-title {
-            color: #1f4e79;
+            color: #121213;
             font-size: 2.5em;
             font-weight: bold;
             text-align: center;
             padding: 20px;
         }
         .sub-title {
-            color: #444;
+            color: #e8f60b;
             font-size: 1.2em;
             text-align: center;
             margin-bottom: 30px;
@@ -48,8 +48,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='main-title'>🤖 Bienvenue sur BotPro – Le chatbot du cours de commerce</div>", unsafe_allow_html=True)
-st.markdown("<div class='sub-title'>Pose une question sur le cours et reçois une réponse instantanée !</div>", unsafe_allow_html=True)
+st.markdown("<div class='main-title'>🤖 Bienvenue sur BotPro – Le chatbot des cours de commerce</div>", unsafe_allow_html=True)
+st.markdown("<div class='sub-title'> </div>", unsafe_allow_html=True)
 
 # 🎬 Page d'accueil : bouton pour démarrer
 if "started" not in st.session_state:
@@ -72,15 +72,40 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown("<h1 style='color:white;'>🤖 Explorez le Commerce avec BotPro</h1>", unsafe_allow_html=True)
-st.write("Pose ta question 👇")
+st.markdown("<h1 style='color:white;'> Explorez le Commerce avec BotPro</h1>", unsafe_allow_html=True)
+st.write("BotPro est un chatbot conçu pour répondre à vos questions sur les cours des Métiers du Commerce et de la Vente. Posez votre question ci-dessous et obtenez une réponse instantanée !")
 
 df = load_data()
-user_question = st.text_input("Ta question ici :")
+MOTS_INDECENTS = [
+    "merde", "putain", "con", "connard", "salop", "enculé", "bordel", "nique", "ta mère", "fdp"
+]
 
-# ➕ À commenter si tu ne veux plus afficher le tableau brut
-# st.write(df.head())
+def contient_mot_indescent(texte: str) -> bool:
+    texte = texte.lower()
+    return any(mot in texte for mot in MOTS_INDECENTS)
+
+def masquer_insultes(texte: str) -> str:
+    for mot in MOTS_INDECENTS:
+        if mot in texte.lower():
+            texte = texte.replace(mot, mot[0] + '*' * (len(mot) - 1))
+    return texte
+
+user_question = st.text_input("Ta question ici 👇:")
 
 if user_question:
-    answer = get_best_answer(user_question, df)
-    st.success(f"Réponse : {answer}")# Ajout de commentaire pour test de commit
+    if contient_mot_indescent(user_question):
+        question_masquee = masquer_insultes(user_question)
+        reponse = (
+            f"🤖🚫 <strong>Ce langage n’est pas approprié</strong> dans : “{question_masquee}”.<br>"
+            f"Merci de rester respectueux 🙏."
+        )
+    else:
+        reponse = get_best_answer(user_question, df)
+        reponse = f"🤖😊 <strong>Réponse :</strong> {reponse}"
+else:
+    reponse = "🤖🤔 J’attends ta question avec impatience !"
+
+st.markdown(
+    f'<div class="response-box">{reponse}</div>',
+    unsafe_allow_html=True
+)
