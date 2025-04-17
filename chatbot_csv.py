@@ -1,7 +1,5 @@
 import pandas as pd
 import streamlit as st
-import openai # type: ignore
-openai.api_key = st.secrets["openai"]["api_key"]
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -109,20 +107,6 @@ else:
 
 st.markdown(
     f'<div class="response-box">{reponse}</div>',
-    unsafe_allow_html=True
-)
-
-# 📥 Intégration du quiz BotPro
-with open("quiz_section.py", encoding="utf-8") as f:
-    exec(f.read())
-    
-# Signature personnalisée en bas à droite
-st.markdown(
-    """
-    <div style='text-align: right; font-size: 0.9em; color: white; margin-top: 30px;'>
-        Réalisé par <strong>Sarah Ouziel</strong> © 2025
-    </div>
-    """,
     unsafe_allow_html=True
 )
 
