@@ -110,6 +110,34 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# 🎮 Jeu : 5 mots du commerce à débloquer
+st.header("🎯 Débloque les 5 mots du commerce")
+
+quiz_mots = [
+    {"mot": "client", "question": "Qui achète un produit ou un service ?", "reponse": "client"},
+    {"mot": "vendeur", "question": "Qui propose un produit ou un service au client ?", "reponse": "vendeur"},
+    {"mot": "produit", "question": "Quel mot désigne un bien que l'on peut acheter ?", "reponse": "produit"},
+    {"mot": "fidelité", "question": "Comment appelle-t-on le fait qu'un client revienne souvent ?", "reponse": "fidelité"},
+    {"mot": "besoin", "question": "Que cherche à satisfaire un client avec un achat ?", "reponse": "besoin"},
+]
+
+if "deverrouilles" not in st.session_state:
+    st.session_state.deverrouilles = []
+
+for mot in quiz_mots:
+    if mot["mot"] in st.session_state.deverrouilles:
+        st.success(f"✅ {mot['mot'].capitalize()} débloqué !")
+    else:
+        reponse = st.text_input(mot["question"], key=mot["mot"])
+        if reponse and reponse.lower().strip() == mot["reponse"]:
+            st.session_state.deverrouilles.append(mot["mot"])
+            st.success(f"🎉 Bravo, tu as débloqué : {mot['mot'].capitalize()} !")
+            st.rerun()
+
+if len(st.session_state.deverrouilles) == len(quiz_mots):
+    st.balloons()
+    st.info("🎉 Tu as débloqué tous les mots du commerce ! Tu connais déjà bien le vocabulaire 👏")
+
 # Footer avec message + lien Digipad
 st.markdown(
     """
