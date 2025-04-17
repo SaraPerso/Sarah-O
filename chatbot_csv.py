@@ -42,4 +42,4 @@ user_question = st.text_input("Ta question ici :")
 
 if user_question:
     answer = get_best_answer(user_question, df)
-    st.success(f"Réponse : {answer}")
+    st.success(f"Réponse : {answer}")# Ajout de commentaire pour test de commit
