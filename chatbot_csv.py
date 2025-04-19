@@ -31,6 +31,11 @@ def afficher_robot_flotant():
     """, unsafe_allow_html=True)
     st.markdown(f"<img src='data:image/png;base64,{encoded_robot}' class='floating-robot'>", unsafe_allow_html=True)
 
+# Utilisation dans chaque page
+if __name__ == "__main__":
+    afficher_robot_flotant()
+    st.title("Page d'exemple avec robot")
+    
 # 🖼️ Logo et titre agrandi + aligné
 col1, col2 = st.columns([0.15, 0.85])
 with col1:
