@@ -77,7 +77,7 @@ if not st.session_state.started:
 onglets = st.tabs(["🤖 Chatbot", "🎯 Quiz de révision", "🎮 Jeu des 5 mots", "📚 Digipad"])
 
 # Data et fonctions
-@st.cache_data
+@st.cache_data(show_spinner="📦 Chargement des questions...")
 def load_data():
     df = pd.read_csv("mon_cours.csv", sep=";", encoding="utf-8")
     df.dropna(inplace=True)
@@ -93,13 +93,17 @@ def get_best_answer(question, df):
 
 MOTS_INDECENTS = ["merde", "putain", "con", "connard", "salop", "enculé", "bordel", "nique", "pute", "ta mère", "fdp"]
 
+import re
+
 def contient_mot_indescent(texte: str) -> bool:
-    return any(mot in texte.lower() for mot in MOTS_INDECENTS)
+    pattern = r'\b(?:' + '|'.join(re.escape(mot) for mot in MOTS_INDECENTS) + r')\b'
+    return re.search(pattern, texte.lower(), re.IGNORECASE) is not None
 
 def masquer_insultes(texte: str) -> str:
     for mot in MOTS_INDECENTS:
-        if mot in texte.lower():
-            texte = texte.replace(mot, mot[0] + '*' * (len(mot) - 1))
+        pattern = fr'\b{re.escape(mot)}\b'
+        remplacement = mot[0] + '*' * (len(mot) - 1)
+        texte = re.sub(pattern, remplacement, texte, flags=re.IGNORECASE)
     return texte
 
 # 🤖 Chatbot
@@ -122,6 +126,10 @@ with onglets[0]:
 # 🎯 Quiz basé sur mon_cours.csv
 with onglets[1]:
     st.header("📚 Quiz de révision")
+    
+    # Bouton pour forcer le rechargement
+    if st.button("🔄 Recharger les questions"):
+        st.cache_data.clear()
     df = load_data()
 
     if "quiz_q" not in st.session_state or "quiz_done" not in st.session_state:
