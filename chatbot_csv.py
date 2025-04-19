@@ -46,7 +46,7 @@ with col2:
 st.markdown("""
     <style>
         .stApp {
-            background-color: #4f5355;
+            background-color: #a1a1a1;
             transition: background 0.5s ease-in-out;
         }
         .main-title {
@@ -178,7 +178,7 @@ with onglets[1]:
             st.session_state.quiz_q = random.choice(df.to_dict("records"))
             st.session_state.quiz_done = False
             st.experimental_rerun()
-
+            
 # 🎮 Jeu des 5 mots
 with onglets[2]:
     st.header("🎯 Débloque les 5 mots du commerce")
