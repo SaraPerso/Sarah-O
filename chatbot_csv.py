@@ -82,6 +82,7 @@ if not st.session_state.started:
     afficher_robot_flotant()
     if st.button("🚀 C'est parti !"):
         st.session_state.started = True
+        st.rerun()
     st.stop()
 
 # Onglets de navigation
