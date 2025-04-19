@@ -74,7 +74,7 @@ if not st.session_state.started:
     st.stop()
 
 # Onglets de navigation
-onglets = st.tabs(["🤖 Chatbot", "🎯 Quiz de révision", "🎮 Jeu des 5 mots"])
+onglets = st.tabs(["🤖 Chatbot", "🎯 Quiz de révision", "🎮 Jeu des 5 mots", "📚 Digipad"])
 
 # Data et fonctions
 @st.cache_data
@@ -220,6 +220,22 @@ with onglets[2]:
         st.balloons()
         st.info("🎉 Tu as débloqué tous les mots du commerce ! Tu connais déjà bien le vocabulaire 👏")
 
+# 📚 Digipad
+with onglets[3]:
+    st.header("📚 Accès au Digipad")
+    st.markdown("""
+    <h2 style="text-align: center; color: #000000; margin-top: 40px;">
+        Ton espace de révision sur Digipad
+    </h2>
+    <div style="margin: 0 auto; max-width: 1200px; padding: 20px; background-color: #f9f9fc;
+                border: 2px solid #61dafb; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <iframe src="https://digipad.app/p/847630/15248ba9144b5"
+                width="100%" height="850px"
+                style="border: none; border-radius: 12px;">
+        </iframe>
+    </div>
+""", unsafe_allow_html=True)
+    
 # Footer avec message + lien Digipad
 st.markdown(
     """
