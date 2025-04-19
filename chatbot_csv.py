@@ -57,7 +57,6 @@ st.markdown("""
 
 st.markdown("<div class='main-title'> L’assistant virtuel pour les cours des Métiers du commerce et de la vente</div>", unsafe_allow_html=True)
 
-
 # Étape 1 : bouton de démarrage     
 if "started" not in st.session_state:
     st.session_state.started = False
@@ -69,7 +68,7 @@ if not st.session_state.started:
     if st.button("🚀 C'est parti !"):
         st.session_state.started = True
     st.stop()
-    
+
 # Onglets de navigation
 onglets = st.tabs(["🤖 Chatbot", "🎯 Quiz de révision", "🎮 Jeu des 5 mots"])
 
