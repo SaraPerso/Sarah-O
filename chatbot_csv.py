@@ -4,72 +4,74 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from PIL import Image
 import random
+import base64
 
-st.set_page_config(page_title="Chatbot 1MCVA", layout="centered")
+st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
-# Chargement du logo
-logo = Image.open("robot.png")
-st.columns([0.2, 0.8])[0].image(logo, width=100)
+# Affichage du robot flottant sur la page d'accueil
+def afficher_robot_flotant():
+    with open("robot3.png", "rb") as img:
+        encoded_robot = base64.b64encode(img.read()).decode()
+    st.markdown("""
+        <style>
+            .floating-robot {
+                position: fixed;
+                bottom: 20px;
+                right: 30px;
+                width: 100px;
+                animation: float 3s ease-in-out infinite;
+                z-index: 100;
+            }
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+                100% { transform: translateY(0px); }
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    st.markdown(f"<img src='data:image/png;base64,{encoded_robot}' class='floating-robot'>", unsafe_allow_html=True)
+
+# 🖼️ Logo et titre agrandi + aligné
+col1, col2 = st.columns([0.15, 0.85])
+with col1:
+    st.image("robot-assistant.png", width=200)  # ← augmente ici
+with col2:
+    st.markdown("<h1 style='color:#121213; padding-top:40px;'> Bienvenue sur BotPro</h1>", unsafe_allow_html=True)
 
 # Styles
 st.markdown("""
     <style>
         .stApp {
             background-color: #4f5355;
+            transition: background 0.5s ease-in-out;
         }
         .main-title {
             color: #121213;
             font-size: 2.5em;
             font-weight: bold;
             text-align: center;
-            padding: 20px;
-        }
-        .sub-title {
-            color: #e8f60b;
-            font-size: 1.2em;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .response-box {
-            background-color: #ffffff;
-            color: #000000;
-            padding: 10px;
-            border-radius: 10px;
-            border: 2px solid #3374ff;
-            margin-top: 20px;
+            padding: 15px;
         }
     </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='main-title'>🤖 Bienvenue sur BotPro – Le chatbot des cours de commerce</div>", unsafe_allow_html=True)
-st.markdown("<div class='sub-title'>Pose une question ou fais un jeu pédagogique 🎨</div>", unsafe_allow_html=True)
+st.markdown("<div class='main-title'> L’assistant virtuel pour les cours des Métiers du commerce et de la vente</div>", unsafe_allow_html=True)
 
-# Étape 1 : bouton de démarrage
+
+# Étape 1 : bouton de démarrage     
 if "started" not in st.session_state:
     st.session_state.started = False
 
 if not st.session_state.started:
     st.markdown("## 👋 Bienvenue sur BotPro !")
     st.markdown("Clique ci-dessous pour accéder aux activités 👇")
-    if st.button("🚀 Commencer le chatbot"):
+    afficher_robot_flotant()
+    if st.button("🚀 C'est parti !"):
         st.session_state.started = True
     st.stop()
-
-# Menu déroulant aligné à droite après démarrage
-with st.container():
-    st.markdown(
-        """
-        <div style='display: flex; justify-content: flex-end;'>
-            <div style='width: 250px;'>
-        """,
-        unsafe_allow_html=True
-    )
-    choix = st.selectbox("📌", [
-        "🤖 Chatbot",
-        "🎯 Quiz de révision",
-        "🎮 Jeu des 5 mots",
-    ])
-    st.markdown("</div></div>", unsafe_allow_html=True)
+    
+# Onglets de navigation
+onglets = st.tabs(["🤖 Chatbot", "🎯 Quiz de révision", "🎮 Jeu des 5 mots"])
 
 # Data et fonctions
 @st.cache_data
@@ -86,7 +88,7 @@ def get_best_answer(question, df):
     best_idx = scores.argmax()
     return df["reponse"].iloc[best_idx]
 
-MOTS_INDECENTS = ["merde", "putain", "con", "connard", "salop", "enculé", "bordel", "nique", "ta mère", "fdp"]
+MOTS_INDECENTS = ["merde", "putain", "con", "connard", "salop", "enculé", "bordel", "nique", "pute", "ta mère", "fdp"]
 
 def contient_mot_indescent(texte: str) -> bool:
     return any(mot in texte.lower() for mot in MOTS_INDECENTS)
@@ -98,7 +100,7 @@ def masquer_insultes(texte: str) -> str:
     return texte
 
 # 🤖 Chatbot
-if choix == "🤖 Chatbot":
+with onglets[0]:
     st.markdown("<h1 style='color:white;'> Explorez le Commerce avec BotPro</h1>", unsafe_allow_html=True)
     st.write("Pose ta question sur le cours 👇")
     df = load_data()
@@ -106,20 +108,76 @@ if choix == "🤖 Chatbot":
     if user_question:
         if contient_mot_indescent(user_question):
             question_masquee = masquer_insultes(user_question)
-            reponse = f"🤖🚫 <strong>Ce langage n’est pas approprié</strong> dans : “{question_masquee}”.<br>Merci de rester respectueux 🙏."
+            reponse = f"🚫 <strong>Ce langage n’est pas approprié</strong> dans : “{question_masquee}”.<br>Merci de rester respectueux 🙏."
         else:
             reponse = get_best_answer(user_question, df)
-            reponse = f"🤖😊 <strong>Réponse :</strong> {reponse}"
+            reponse = f"😊 <strong>Réponse :</strong> {reponse}"
     else:
-        reponse = "🤖🤔 J’attends ta question avec impatience !"
+        reponse = "🤔 J’attends ta question avec impatience !"
     st.markdown(f'<div class="response-box">{reponse}</div>', unsafe_allow_html=True)
 
-# 🎯 Quiz (placeholder à compléter)
-elif choix == "🎯 Quiz de révision":
-    st.markdown("### 📘 Prochainement : Quiz pédagogique à choix multiples !")
+# 🎯 Quiz basé sur mon_cours.csv
+with onglets[1]:
+    st.header("📚 Quiz de révision")
+    df = load_data()
+
+    if "quiz_q" not in st.session_state or "quiz_done" not in st.session_state:
+        st.session_state.quiz_q = random.choice(df.to_dict("records"))
+        st.session_state.quiz_done = False
+        st.session_state.reponse_libre = ""
+        st.session_state.selected_qcm = None
+
+    if st.session_state.get("next_question", False):
+        st.session_state.quiz_q = random.choice(df.to_dict("records"))
+        st.session_state.quiz_done = False
+        st.session_state.reponse_libre = ""
+        st.session_state.selected_qcm = None
+        st.session_state.next_question = False
+
+    question = st.session_state.quiz_q["question"]
+    reponse_attendue = st.session_state.quiz_q["reponse"]
+
+    st.subheader(f"🤔 {question}")
+
+    reponse_libre = st.text_input("💬 Ta réponse :", key="reponse_libre", placeholder="Appuie sur Entrée pour valider...")
+
+    propositions = [reponse_attendue]
+    while len(propositions) < 4:
+        r = random.choice(df["reponse"].tolist())
+        if r not in propositions:
+            propositions.append(r)
+    random.shuffle(propositions)
+
+    choix_qcm = st.radio("☑️ Ou choisis une réponse:", propositions, key="choix_qcm", index=None)
+
+    if st.button("✅ Valider la réponse"):
+        if reponse_libre.strip() and choix_qcm:
+            st.warning("❗Merci de répondre soit à la question libre, soit au QCM, pas les deux.")
+        elif reponse_libre.strip():
+            from difflib import SequenceMatcher
+            ratio = SequenceMatcher(None, reponse_attendue.lower(), reponse_libre.lower()).ratio()
+            if ratio > 0.6:
+                st.success("✅ Bonne réponse !")
+                st.session_state.quiz_done = True
+            else:
+                st.error(f"❌ Mauvaise réponse. Réponse attendue : {reponse_attendue}")
+        elif choix_qcm:
+            if choix_qcm == reponse_attendue:
+                st.success("✅ Bonne réponse !")
+                st.session_state.quiz_done = True
+            else:
+                st.error(f"❌ Mauvaise réponse. Réponse attendue : {reponse_attendue}")
+        else:
+            st.warning("❗Merci de répondre à la question ou de choisir une réponse dans le QCM.")
+
+    if st.session_state.quiz_done:
+        if st.button("🔁 Question suivante"):
+            st.session_state.quiz_q = random.choice(df.to_dict("records"))
+            st.session_state.quiz_done = False
+            st.experimental_rerun()
 
 # 🎮 Jeu des 5 mots
-elif choix == "🎮 Jeu des 5 mots":
+with onglets[2]:
     st.header("🎯 Débloque les 5 mots du commerce")
     quiz_mots = [
         {"mot": "client", "question": "Qui achète un produit ou un service ?", "reponse": "client"},
