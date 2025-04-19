@@ -9,29 +9,33 @@ import base64
 
 st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
-# ✅ 👉 Coller le compteur ici
+import streamlit as st
 import os
+import csv
+from datetime import datetime
 
-VISITOR_FILE = "nb_visiteurs.txt"
+CSV_VISITE_FILE = "visites.csv"
 
-def get_visiteur_count():
-    if not os.path.exists(VISITOR_FILE):
-        with open(VISITOR_FILE, "w") as f:
-            f.write("0")
-    with open(VISITOR_FILE, "r") as f:
-        return int(f.read())
+def enregistrer_visite():
+    date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if not os.path.exists(CSV_VISITE_FILE):
+        with open(CSV_VISITE_FILE, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["Horodatage"])
+    with open(CSV_VISITE_FILE, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([date_heure])
 
-def increment_visiteur_count():
-    count = get_visiteur_count() + 1
-    with open(VISITOR_FILE, "w") as f:
-        f.write(str(count))
-    return count
+def total_visites():
+    if not os.path.exists(CSV_VISITE_FILE):
+        return 0
+    with open(CSV_VISITE_FILE, "r") as f:
+        return sum(1 for _ in f) - 1  # -1 pour retirer l'en-tête
 
-if "visited" not in st.session_state:
-    st.session_state.visited = True
-    total = increment_visiteur_count()
-else:
-    total = get_visiteur_count()
+total = total_visites()
+
+# Exécuter à chaque lancement de page
+enregistrer_visite()
 
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
@@ -291,13 +295,13 @@ with onglets[3]:
     
 # Footer avec message + lien Digipad
 st.markdown(
-    """
+    f"""
     <div style='text-align: center; font-size: 1em; color: white; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc;'>
         ✨ Crois en toi, révise avec le sourire 😄 et donne le meilleur de toi-même !<br>
         💪 Bon courage pour tes révisions !<br><br>
         👉 <a href="https://digipad.app/p/847630/15248ba9144b5" target="_blank" style="color:white; font-weight:bold;">
         Accède ici à ton Digipad 📚</a><br><br>
-        👥 Nombre de visiteurs uniques : <strong>{total}</strong>
+        👥 <strong>Nombre total de visiteurs :</strong> {total}
     </div>
     """,
     unsafe_allow_html=True
