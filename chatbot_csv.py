@@ -34,7 +34,6 @@ def afficher_robot_flotant():
 # Utilisation dans chaque page
 if __name__ == "__main__":
     afficher_robot_flotant()
-    st.title("Page d'exemple avec robot")
     
 # 🖼️ Logo et titre agrandi + aligné
 col1, col2 = st.columns([0.15, 0.85])
