@@ -9,6 +9,32 @@ import base64
 
 st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
+import os
+
+VISITOR_FILE = "nb_visiteurs.txt"
+
+def get_visiteur_count():
+    if not os.path.exists(VISITOR_FILE):
+        with open(VISITOR_FILE, "w") as f:
+            f.write("0")
+    with open(VISITOR_FILE, "r") as f:
+        return int(f.read())
+
+def increment_visiteur_count():
+    count = get_visiteur_count() + 1
+    with open(VISITOR_FILE, "w") as f:
+        f.write(str(count))
+    return count
+
+# Une seule fois par session navigateur
+if "visited" not in st.session_state:
+    st.session_state.visited = True
+    total = increment_visiteur_count()
+else:
+    total = get_visiteur_count()
+
+st.markdown(f"👥 Nombre de visiteurs uniques : **{total}**")
+
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
     with open("robot3.png", "rb") as img:
