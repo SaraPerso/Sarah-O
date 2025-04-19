@@ -241,9 +241,13 @@ with onglets[2]:
                 st.session_state.deverrouilles.append(mot["mot"])
                 st.success(f"🎉 Bravo, tu as débloqué : {mot['mot'].capitalize()} !")
                 st.rerun()
+
+    import time
     if len(st.session_state.deverrouilles) == len(quiz_mots):
-        st.balloons()
-        st.info("🎉 Tu as débloqué tous les mots du commerce ! Tu connais déjà bien le vocabulaire 👏")
+    time.sleep(0.5)  # petite pause avant
+    st.balloons()
+    time.sleep(1.5)  # on laisse les ballons "vivre" un peu
+    st.info("🎉 Tu as débloqué tous les mots du commerce ! Tu connais déjà bien le vocabulaire 👏")
 
 # 📚 Digipad
 with onglets[3]:
