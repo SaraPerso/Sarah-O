@@ -136,23 +136,34 @@ with onglets[0]:
 # 🎯 Quiz basé sur mon_cours.csv
 with onglets[1]:
     st.header("📚 Quiz de révision")
-    
-    # Bouton pour forcer le rechargement
+
+    if "quiz_q" not in st.session_state:
+        st.session_state.quiz_q = None
+    if "quiz_done" not in st.session_state:
+        st.session_state.quiz_done = False
+    if "reponse_libre" not in st.session_state:
+        st.session_state.reponse_libre = ""
+    if "selected_qcm" not in st.session_state:
+        st.session_state.selected_qcm = None
+    if "next_question" not in st.session_state:
+        st.session_state.next_question = False
+    if "propositions" not in st.session_state:
+        st.session_state.propositions = None
+
     if st.button("🔄 Recharger les questions"):
         st.cache_data.clear()
+
     df = load_data()
 
-    if "quiz_q" not in st.session_state or "quiz_done" not in st.session_state:
+    if st.session_state.quiz_q is None:
         st.session_state.quiz_q = random.choice(df.to_dict("records"))
-        st.session_state.quiz_done = False
-        st.session_state.reponse_libre = ""
-        st.session_state.selected_qcm = None
 
-    if st.session_state.get("next_question", False):
+    if st.session_state.next_question:
         st.session_state.quiz_q = random.choice(df.to_dict("records"))
         st.session_state.quiz_done = False
         st.session_state.reponse_libre = ""
         st.session_state.selected_qcm = None
+        st.session_state.propositions = None
         st.session_state.next_question = False
 
     question = st.session_state.quiz_q["question"]
@@ -167,7 +178,7 @@ with onglets[1]:
         placeholder="Appuie sur Entrée pour valider..."
     )
 
-    if "propositions" not in st.session_state or st.session_state.quiz_done:
+    if st.session_state.propositions is None or st.session_state.quiz_done:
         propositions = [reponse_attendue]
         while len(propositions) < 4:
             r = random.choice(df["reponse"].tolist())
@@ -206,12 +217,8 @@ with onglets[1]:
 
     if st.session_state.quiz_done:
         if st.button("🔁 Question suivante"):
-            st.session_state.quiz_q = random.choice(df.to_dict("records"))
-            st.session_state.quiz_done = False
-            st.session_state.reponse_libre = ""
-            st.session_state.selected_qcm = None
-            st.session_state.propositions = None
-            st.experimental_rerun()
+            st.session_state.next_question = True
+            st.rerun()
             
 # 🎮 Jeu des 5 mots
 with onglets[2]:
