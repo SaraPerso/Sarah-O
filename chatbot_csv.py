@@ -46,10 +46,19 @@ with col2:
 # Styles
 st.markdown("""
     <style>
+    /* Fondu enchaîné à chaque changement de page */
         .stApp {
             background-color: #a1a1a1; /* plus clair */
-            transition: background 0.5s ease-in-out;
+            transition: background 0.6s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
         }
+/* Animation keyframes */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
 
         div.block-container {
             padding: 2rem 2rem 4rem 2rem;
