@@ -46,9 +46,19 @@ with col2:
 st.markdown("""
     <style>
         .stApp {
-            background-color: #a1a1a1;
+            background-color: #a1a1a1; /* plus clair */
             transition: background 0.5s ease-in-out;
         }
+
+        div.block-container {
+            padding: 2rem 2rem 4rem 2rem;
+        }
+
+        h1, h2, h3, h4 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
         .main-title {
             color: #121213;
             font-size: 2.5em;
