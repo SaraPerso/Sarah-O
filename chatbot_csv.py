@@ -9,6 +9,7 @@ import base64
 
 st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
+# ✅ 👉 Coller le compteur ici
 import os
 
 VISITOR_FILE = "nb_visiteurs.txt"
@@ -26,14 +27,11 @@ def increment_visiteur_count():
         f.write(str(count))
     return count
 
-# Une seule fois par session navigateur
 if "visited" not in st.session_state:
     st.session_state.visited = True
     total = increment_visiteur_count()
 else:
     total = get_visiteur_count()
-
-st.markdown(f"👥 Nombre de visiteurs uniques : **{total}**")
 
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
@@ -298,7 +296,8 @@ st.markdown(
         ✨ Crois en toi, révise avec le sourire 😄 et donne le meilleur de toi-même !<br>
         💪 Bon courage pour tes révisions !<br><br>
         👉 <a href="https://digipad.app/p/847630/15248ba9144b5" target="_blank" style="color:white; font-weight:bold;">
-        Accède ici à ton Digipad 📚</a>
+        Accède ici à ton Digipad 📚</a><br><br>
+        👥 Nombre de visiteurs uniques : <strong>{total}</strong>
     </div>
     """,
     unsafe_allow_html=True
