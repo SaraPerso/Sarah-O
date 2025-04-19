@@ -18,7 +18,7 @@ def afficher_robot_flotant():
                 position: fixed;
                 bottom: 20px;
                 right: 30px;
-                width: 100px;
+                width: 180px;
                 animation: float 3s ease-in-out infinite;
                 z-index: 100;
             }
