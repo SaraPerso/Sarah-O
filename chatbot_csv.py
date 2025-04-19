@@ -142,16 +142,29 @@ with onglets[1]:
 
     st.subheader(f"🤔 {question}")
 
-    reponse_libre = st.text_input("💬 Ta réponse :", key="reponse_libre", placeholder="Appuie sur Entrée pour valider...")
+    reponse_libre = st.text_input(
+        "💬 Ta réponse :",
+        value=st.session_state.reponse_libre,
+        key="reponse_libre",
+        placeholder="Appuie sur Entrée pour valider..."
+    )
 
-    propositions = [reponse_attendue]
-    while len(propositions) < 4:
-        r = random.choice(df["reponse"].tolist())
-        if r not in propositions:
-            propositions.append(r)
-    random.shuffle(propositions)
+    if "propositions" not in st.session_state or st.session_state.quiz_done:
+        propositions = [reponse_attendue]
+        while len(propositions) < 4:
+            r = random.choice(df["reponse"].tolist())
+            if r not in propositions:
+                propositions.append(r)
+        random.shuffle(propositions)
+        st.session_state.propositions = propositions
 
-    choix_qcm = st.radio("☑️ Ou choisis une réponse:", propositions, key="choix_qcm", index=None)
+    container_qcm = st.container()
+    choix_qcm = container_qcm.radio(
+        "☑️ Ou choisis une réponse:",
+        st.session_state.propositions,
+        key="choix_qcm",
+        index=None
+    )
 
     if st.button("✅ Valider la réponse"):
         if reponse_libre.strip() and choix_qcm:
@@ -177,6 +190,9 @@ with onglets[1]:
         if st.button("🔁 Question suivante"):
             st.session_state.quiz_q = random.choice(df.to_dict("records"))
             st.session_state.quiz_done = False
+            st.session_state.reponse_libre = ""
+            st.session_state.selected_qcm = None
+            st.session_state.propositions = None
             st.experimental_rerun()
             
 # 🎮 Jeu des 5 mots
