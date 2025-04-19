@@ -3,6 +3,7 @@ import streamlit as st
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from PIL import Image
+import time
 import random
 import base64
 
@@ -242,7 +243,9 @@ with onglets[2]:
                 st.success(f"🎉 Bravo, tu as débloqué : {mot['mot'].capitalize()} !")
                 st.rerun()
     if len(st.session_state.deverrouilles) == len(quiz_mots):
+        time.sleep(1.5)
         st.balloons()
+        time.sleep(2.0)
         st.info("🎉 Tu as débloqué tous les mots du commerce ! Tu connais déjà bien le vocabulaire 👏")
 
 # 📚 Digipad
