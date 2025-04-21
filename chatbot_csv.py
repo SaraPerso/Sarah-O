@@ -13,10 +13,6 @@ import streamlit as st
 import os
 import csv
 from datetime import datetime
-
-if "visite_loggee" not in st.session_state:
-    st.session_state.visite_loggee = True
-    enregistrer_visite()
     
 CSV_VISITE_FILE = "visites.csv"
 
