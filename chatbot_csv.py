@@ -15,7 +15,8 @@ import os
 import csv
 from datetime import datetime
 
-CSV_VISITE_FILE = os.path.expanduser("~/.streamlit/visites.csv")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_VISITE_FILE = os.path.join(SCRIPT_DIR, "visites.csv")
 
 def enregistrer_visite():
     date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
