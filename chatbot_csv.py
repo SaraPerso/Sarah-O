@@ -99,7 +99,7 @@ st.markdown("""
             font-size: 2.5em;
             font-weight: bold;
             text-align: center;
-            padding: 25px;
+            padding: 15px;
         }
     </style>
 """, unsafe_allow_html=True)
