@@ -32,6 +32,10 @@ def total_visites():
     with open(CSV_VISITE_FILE, "r") as f:
         return sum(1 for _ in f) - 1  # -1 pour retirer l'en-tête
 
+if "visite_loggee" not in st.session_state:
+    enregistrer_visite()
+    st.session_state.visite_loggee = True
+
 total = total_visites()
 
 # Exécuter à chaque lancement de page
