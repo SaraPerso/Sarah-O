@@ -35,22 +35,19 @@ def total_visites():
     if not os.path.exists(CSV_VISITE_FILE):
         return 0
     with open(CSV_VISITE_FILE, "r") as f:
-        return sum(1 for _ in f) - 1  # -1 pour l'en-tête
+        return sum(1 for _ in f) - 1  # -1 pour retirer l'en-tête
 
-# Enregistrer la visite UNE seule fois par session
+# ✅ Exécuter UNE seule fois par session
 if "visite_loggee" not in st.session_state:
-    enregistrer_visite()
     st.session_state.visite_loggee = True
+    enregistrer_visite()
 
-# Calcul du total de visites
+# 💬 Puis récupérer le total
 total = total_visites()
 
-# Affichage du compteur
-st.metric("Nombre total de visites", total)
-
-# 🎉 Toast à partir de 100 visites
-if total >= 100:
-    st.toast("🥳 Déjà plus de 100 visites ! Merci !")
+# ✅ Toast si seuil atteint
+if total >= 500:
+    st.toast("🥳 Déjà plus de 500 visites ! Merci !")
 
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
