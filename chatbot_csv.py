@@ -13,8 +13,8 @@ st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
 import os
 import csv
-import sqlite3
 from datetime import datetime
+import sqlite3
 
 def init_database():
     """Initialise la base de données des visites"""
@@ -43,6 +43,12 @@ def total_visites():
     conn.close()
     return total
 
+# Initialisation de la base de données
+init_database()
+
+st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
+
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_VISITE_FILE = os.path.join(SCRIPT_DIR, "visites.csv")
 
@@ -68,8 +74,8 @@ if "visite_loggee" not in st.session_state:
 
 total = total_visites()
 
-if total >= 200:
-    st.toast("🥳 Déjà plus de 200 visites ! Merci !")
+if total >= 100:
+    st.toast("🥳 Déjà plus de 100 visites ! Merci !")
 
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
