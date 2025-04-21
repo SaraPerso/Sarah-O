@@ -9,6 +9,7 @@ import base64
 
 st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
+import streamlit as st
 import os
 import csv
 from datetime import datetime
