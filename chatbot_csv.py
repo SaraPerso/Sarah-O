@@ -13,7 +13,7 @@ import streamlit as st
 import os
 import csv
 from datetime import datetime
-    
+
 CSV_VISITE_FILE = "visites.csv"
 
 def enregistrer_visite():
@@ -32,10 +32,13 @@ def total_visites():
     with open(CSV_VISITE_FILE, "r") as f:
         return sum(1 for _ in f) - 1  # -1 pour retirer l'en-tête
 
-total = total_visites()
+# ✅ Exécuter UNE seule fois par session
+if "visite_loggee" not in st.session_state:
+    st.session_state.visite_loggee = True
+    enregistrer_visite()
 
-# Exécuter à chaque lancement de page
-enregistrer_visite()
+# 💬 Puis récupérer le total
+total = total_visites()
 
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
