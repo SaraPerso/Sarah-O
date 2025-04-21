@@ -15,7 +15,8 @@ import os
 import csv
 from datetime import datetime
 
-CSV_VISITE_FILE = "visites.csv"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_VISITE_FILE = os.path.join(SCRIPT_DIR, "visites.csv")
 
 def enregistrer_visite():
     date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -31,7 +32,7 @@ def total_visites():
     if not os.path.exists(CSV_VISITE_FILE):
         return 0
     with open(CSV_VISITE_FILE, "r") as f:
-        return sum(1 for _ in f) - 1  # -1 pour retirer l'en-tête
+        return sum(1 for _ in f) - 1
 
 if "visite_loggee" not in st.session_state:
     st.session_state.visite_loggee = True
