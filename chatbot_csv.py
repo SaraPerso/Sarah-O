@@ -15,7 +15,6 @@ import os
 import csv
 from datetime import datetime
 
-# Create CSV file if it doesn't exist *outside* Streamlit functions
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_VISITE_FILE = os.path.join(SCRIPT_DIR, "visites.csv")
 
