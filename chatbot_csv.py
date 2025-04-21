@@ -31,11 +31,6 @@ def enregistrer_visite():
         writer = csv.writer(f)
         writer.writerow([date_heure])
 
-    if os.path.exists(CSV_VISITE_FILE):
-    with open(CSV_VISITE_FILE, "r") as f:
-        contenu = f.read()
-    st.code(contenu, language="csv")
-
 def total_visites():
     if not os.path.exists(CSV_VISITE_FILE):
         return 0
