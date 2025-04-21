@@ -125,7 +125,7 @@ st.markdown("""
     .stTabs [role="tab"] {
         font-size: 1.4rem !important;  /* Taille du texte : augmente la valeur pour encore plus grand */
         padding: 18px 36px !important; /* Taille de la zone cliquable */
-        font-weight: 800 !important;  /* Les valeurs possibles vont de 100 à 900 */
+        font-weight: bold !important;
         color: #222 !important;        /* Couleur du texte */
         border-radius: 10px 10px 0 0 !important;  /* Arrondi */
         background: #f4f4f4 !important; /* Couleur de fond des onglets */
