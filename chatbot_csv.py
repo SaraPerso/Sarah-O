@@ -133,7 +133,7 @@ st.markdown("""
         min-width: 160px !important;   /* Largeur minimale pour chaque onglet */
     }
     .stTabs [role="tab"][aria-selected="true"] {
-        background: #007bfc !important; /* Onglet actif, couleur */
+        background: #000000 !important; /* Onglet actif, couleur */
         color: white !important;
     }
     </style>
