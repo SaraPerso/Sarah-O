@@ -34,6 +34,10 @@ def total_visites():
 
 total = total_visites()
 
+if "visite_loggee" not in st.session_state:
+    st.session_state.visite_loggee = True
+    enregistrer_visite()
+
 # Exécuter à chaque lancement de page
 enregistrer_visite()
 
