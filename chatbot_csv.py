@@ -128,7 +128,7 @@ st.markdown("""
         font-weight: bold !important;
         color: #222 !important;        /* Couleur du texte */
         border-radius: 10px 10px 0 0 !important;  /* Arrondi */
-        background: #f4f4f4 !important; /* Couleur de fond des onglets */
+        background: #000000 !important; /* Couleur de fond des onglets */
         margin-right: 8px !important;
         min-width: 160px !important;   /* Largeur minimale pour chaque onglet */
     }
