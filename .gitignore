@@ -1,5 +1,4 @@
 __pycache__/
 *.pyc
 .env
-nb_visiteurs.txt
 visites.csv
