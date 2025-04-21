@@ -16,7 +16,15 @@ from datetime import datetime
     
 CSV_VISITE_FILE = "visites.csv"
 
-
+def enregistrer_visite():
+    date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if not os.path.exists(CSV_VISITE_FILE):
+        with open(CSV_VISITE_FILE, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["Horodatage"])
+    with open(CSV_VISITE_FILE, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([date_heure])
 
 def total_visites():
     if not os.path.exists(CSV_VISITE_FILE):
