@@ -322,3 +322,15 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+# 📆 Badge de mise à jour
+from datetime import datetime
+date_maj = datetime.now().strftime("%d/%m/%Y à %Hh%M")
+st.markdown(
+    f"""
+    <div style='text-align: center; font-size: 0.9em; color: white; margin-top: 10px;'>
+        📆 Dernière mise à jour : <strong>{date_maj}</strong>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
