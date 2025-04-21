@@ -18,13 +18,12 @@ from datetime import datetime
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_VISITE_FILE = os.path.join(SCRIPT_DIR, "visites.csv")
 
-if not os.path.exists(CSV_VISITE_FILE):
-    with open(CSV_VISITE_FILE, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Horodatage"])
-
 def enregistrer_visite():
     date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if not os.path.exists(CSV_VISITE_FILE):
+        with open(CSV_VISITE_FILE, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["Horodatage"])
     with open(CSV_VISITE_FILE, "a", newline="") as f:
         writer = csv.writer(f)
         writer.writerow([date_heure])
@@ -33,7 +32,13 @@ def total_visites():
     if not os.path.exists(CSV_VISITE_FILE):
         return 0
     with open(CSV_VISITE_FILE, "r") as f:
-        return sum(1 for _ in f) -1  # Subtract 1 to account for header
+        return sum(1 for _ in f) - 1
+
+if "visite_loggee" not in st.session_state:
+    st.session_state.visite_loggee = True
+    enregistrer_visite()
+
+total = total_visites()
 
 if total >= 100:
     st.toast("🥳 Déjà plus de 100 visites ! Merci !")
