@@ -14,11 +14,6 @@ import os
 import csv
 from datetime import datetime
 
-import streamlit as st
-import csv
-import os
-from datetime import datetime
-
 CSV_VISITE_FILE = "visites.csv"
 
 def enregistrer_visite():
