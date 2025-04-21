@@ -15,7 +15,10 @@ import csv
 from datetime import datetime
 
 CSV_VISITE_FILE = "visites.csv"
-
+@st.experimental_singleton
+def verifier_et_marquer_visite():
+    enregistrer_visite()
+    
 def enregistrer_visite():
     date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if not os.path.exists(CSV_VISITE_FILE):
