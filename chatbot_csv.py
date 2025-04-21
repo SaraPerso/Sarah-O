@@ -6,11 +6,6 @@ from PIL import Image
 import time
 import random
 import base64
-
-import streamlit as st
-
-st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
-
 import os
 import csv
 from datetime import datetime
@@ -48,26 +43,7 @@ init_database()
 
 st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
-
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-CSV_VISITE_FILE = os.path.join(SCRIPT_DIR, "visites.csv")
-
-def enregistrer_visite():
-    date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    if not os.path.exists(CSV_VISITE_FILE):
-        with open(CSV_VISITE_FILE, "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["Horodatage"])
-    with open(CSV_VISITE_FILE, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([date_heure])
-
-def total_visites():
-    if not os.path.exists(CSV_VISITE_FILE):
-        return 0
-    with open(CSV_VISITE_FILE, "r") as f:
-        return sum(1 for _ in f) - 1
-
+# Enregistrement de la visite
 if "visite_loggee" not in st.session_state:
     st.session_state.visite_loggee = True
     enregistrer_visite()
