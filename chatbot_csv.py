@@ -30,15 +30,8 @@ def total_visites():
     if not os.path.exists(CSV_VISITE_FILE):
         return 0
     with open(CSV_VISITE_FILE, "r") as f:
-        return sum(1 for _ in f) - 1  # En-tête
+        return sum(1 for _ in f) - 1  # -1 pour retirer l'en-tête
 
-# ✅ Cette fonction ne sera appelée qu'une fois par navigateur
-@st.experimental_singleton
-def verifier_et_marquer_visite():
-    enregistrer_visite()
-
-# ✅ Appel sécurisé
-verifier_et_marquer_visite()
 total = total_visites()
 
 # Exécuter à chaque lancement de page
