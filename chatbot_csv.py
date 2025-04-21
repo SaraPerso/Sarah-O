@@ -7,9 +7,10 @@ import time
 import random
 import base64
 
+import streamlit as st
+
 st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
-import streamlit as st
 import os
 import csv
 from datetime import datetime
@@ -32,15 +33,12 @@ def total_visites():
     with open(CSV_VISITE_FILE, "r") as f:
         return sum(1 for _ in f) - 1  # -1 pour retirer l'en-tête
 
-# ✅ Exécuter UNE seule fois par session
 if "visite_loggee" not in st.session_state:
     st.session_state.visite_loggee = True
     enregistrer_visite()
 
-# 💬 Puis récupérer le total
 total = total_visites()
 
-# ✅ Toast si seuil atteint
 if total >= 100:
     st.toast("🥳 Déjà plus de 100 visites ! Merci !")
 
