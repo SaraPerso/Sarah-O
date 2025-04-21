@@ -46,8 +46,8 @@ if "visite_loggee" not in st.session_state:
 total = total_visites()
 
 # ✅ Toast si seuil atteint
-if total >= 500:
-    st.toast("🥳 Déjà plus de 500 visites ! Merci !")
+if total >= 100:
+    st.toast("🥳 Déjà plus de 100 visites ! Merci !")
 
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
