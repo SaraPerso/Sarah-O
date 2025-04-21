@@ -123,10 +123,9 @@ st.markdown("""
     <style>
     /* Agrandir la police et les zones des onglets */
     .stTabs [role="tab"] {
-        font-size: 1.4rem !important;  /* Taille du texte */
+        font-size: 1.4rem !important;  /* Taille du texte : augmente la valeur pour encore plus grand */
         padding: 18px 36px !important; /* Taille de la zone cliquable */
-        font-weight: bold !important;  /* Texte en gras */
-        font-family: Arial, sans-serif !important; /* Police (si nécessaire) */
+        font-weight: bold !important;
         color: #222 !important;        /* Couleur du texte */
         border-radius: 10px 10px 0 0 !important;  /* Arrondi */
         background: #f4f4f4 !important; /* Couleur de fond des onglets */
@@ -134,8 +133,8 @@ st.markdown("""
         min-width: 160px !important;   /* Largeur minimale pour chaque onglet */
     }
     .stTabs [role="tab"][aria-selected="true"] {
-        background: #000000 !important; /* Onglet actif, couleur de fond */
-        color: white !important;        /* Couleur du texte de l'onglet actif */
+        background: #000000 !important; /* Onglet actif, couleur */
+        color: white !important;
     }
     </style>
 """, unsafe_allow_html=True)
