@@ -119,6 +119,26 @@ if not st.session_state.started:
         st.rerun()
     st.stop()
 
+st.markdown("""
+    <style>
+    /* Agrandir la police et les zones des onglets */
+    .stTabs [role="tab"] {
+        font-size: 1.4rem !important;  /* Taille du texte : augmente la valeur pour encore plus grand */
+        padding: 18px 36px !important; /* Taille de la zone cliquable */
+        font-weight: bold !important;
+        color: #222 !important;        /* Couleur du texte */
+        border-radius: 10px 10px 0 0 !important;  /* Arrondi */
+        background: #f4f4f4 !important; /* Couleur de fond des onglets */
+        margin-right: 8px !important;
+        min-width: 160px !important;   /* Largeur minimale pour chaque onglet */
+    }
+    .stTabs [role="tab"][aria-selected="true"] {
+        background: #007bfc !important; /* Onglet actif, couleur */
+        color: white !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Onglets de navigation
 onglets = st.tabs(["🤖 Chatbot", "🎯 Quiz de révision", "🎮 Jeu des 5 mots", "📚 Digipad"])
 
