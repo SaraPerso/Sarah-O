@@ -1,4 +1,3 @@
-import pygame
 import random
 import io
 import base64
