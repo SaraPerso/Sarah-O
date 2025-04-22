@@ -1,3 +1,7 @@
+import pygame
+import random
+import io
+import base64
 import pandas as pd
 import streamlit as st
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -50,8 +54,8 @@ if "visite_loggee" not in st.session_state:
 
 total = total_visites()
 
-if total >= 100:
-    st.toast("🥳 Déjà plus de 100 visites ! Merci !")
+if total >= 300:
+    st.toast("🥳 Déjà plus de 300 visites ! Merci !")
 
 # Affichage du robot flottant sur la page d'accueil
 def afficher_robot_flotant():
@@ -312,7 +316,7 @@ with onglets[2]:
         st.balloons()
         time.sleep(2.0)
         st.info("🎉 Tu as débloqué tous les mots du commerce ! Tu connais déjà bien le vocabulaire 👏")
-
+        
 # 📚 Digipad
 with onglets[3]:
     st.header("📚 Accès au Digipad")
