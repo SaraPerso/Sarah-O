@@ -48,10 +48,6 @@ def total_visites():
         reader = csv.reader(f)
         return sum(1 for _ in reader) - 1  # -1 pour l’en-tête
 
-if st.button("📝 Forcer une visite"):
-    enregistrer_visite()
-    st.success("600")
-
 # Initialisation de la base de données
 init_fichier_visites()
 
