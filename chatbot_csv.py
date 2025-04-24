@@ -20,6 +20,13 @@ def init_fichier_visites():
             writer = csv.writer(f)
             writer.writerow(["date"])  # En-tête
 
+def init_fichier_visites():
+    if not os.path.exists("visites.csv"):
+        with open("visites.csv", "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["date"])
+        print("✅ Fichier visites.csv créé")
+
 def enregistrer_visite():
     """Enregistre une nouvelle visite dans le fichier CSV"""
     with open("visites.csv", "a", newline="") as f:
