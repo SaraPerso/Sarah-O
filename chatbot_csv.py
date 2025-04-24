@@ -33,6 +33,13 @@ def enregistrer_visite():
         writer = csv.writer(f)
         writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
 
+def enregistrer_visite():
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open("visites.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([now])
+    print(f"✅ Visite enregistrée à {now}")
+
 def total_visites():
     """Retourne le nombre total de visites enregistrées"""
     if not os.path.exists("visites.csv"):
