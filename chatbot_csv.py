@@ -87,6 +87,7 @@ def afficher_robot_flotant():
     st.markdown(f"<img src='data:image/png;base64,{encoded_robot}' class='floating-robot'>", unsafe_allow_html=True)
 
 # Utilisation dans chaque page
+if __name__ == "__main__":
     afficher_robot_flotant()
     
 # 🖼️ Logo et titre agrandi + aligné
