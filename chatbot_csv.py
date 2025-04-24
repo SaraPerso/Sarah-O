@@ -13,14 +13,13 @@ import os
 import csv
 from datetime import datetime
 
-def init_fichier_visites():
-    """Crée le fichier visites.csv s’il n’existe pas"""
-    if not os.path.exists("visites.csv"):
-        with open("visites.csv", "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["date"])  # En-tête
+import os
+import csv
+from datetime import datetime
+import streamlit as st
 
 def init_fichier_visites():
+    """Crée le fichier visites.csv s’il n’existe pas"""
     if not os.path.exists("visites.csv"):
         with open("visites.csv", "w", newline="") as f:
             writer = csv.writer(f)
@@ -29,11 +28,6 @@ def init_fichier_visites():
 
 def enregistrer_visite():
     """Enregistre une nouvelle visite dans le fichier CSV"""
-    with open("visites.csv", "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
-
-def enregistrer_visite():
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open("visites.csv", "a", newline="") as f:
         writer = csv.writer(f)
@@ -48,16 +42,22 @@ def total_visites():
         reader = csv.reader(f)
         return sum(1 for _ in reader) - 1  # -1 pour l’en-tête
 
-# Initialisation de la base de données
+# Initialisation du fichier
 init_fichier_visites()
 
-st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
-
 # Enregistrement de la visite
-if "visite_loggee" not in st.session_state:
-    st.session_state.visite_loggee = True
-    enregistrer_visite()
+from datetime import timedelta
 
+now = datetime.now()
+if "last_visit" not in st.session_state:
+    enregistrer_visite()
+    st.session_state.last_visit = now
+else:
+    if now - st.session_state.last_visit > timedelta(hours=24):
+        enregistrer_visite()
+        st.session_state.last_visit = now
+
+# Affichage du total
 total = total_visites()
 
 if total >= 300:
