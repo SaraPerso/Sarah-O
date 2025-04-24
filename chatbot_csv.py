@@ -18,6 +18,8 @@ import csv
 from datetime import datetime
 import streamlit as st
 
+st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
+
 def init_fichier_visites():
     """Crée le fichier visites.csv s’il n’existe pas"""
     if not os.path.exists("visites.csv"):
