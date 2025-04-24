@@ -12,37 +12,30 @@ import base64
 import os
 import csv
 from datetime import datetime
-import sqlite3
 
-def init_database():
-    """Initialise la base de données des visites"""
-    conn = sqlite3.connect('visites.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS visites 
-                 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                  date TEXT)''')
-    conn.commit()
-    conn.close()
+def init_fichier_visites():
+    """Crée le fichier visites.csv s’il n’existe pas"""
+    if not os.path.exists("visites.csv"):
+        with open("visites.csv", "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["date"])  # En-tête
 
 def enregistrer_visite():
-    """Enregistre une nouvelle visite"""
-    conn = sqlite3.connect('visites.db')
-    c = conn.cursor()
-    date_heure = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    c.execute("INSERT INTO visites (date) VALUES (?)", (date_heure,))
-    conn.commit()
-    conn.close()
+    """Enregistre une nouvelle visite dans le fichier CSV"""
+    with open("visites.csv", "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
 
 def total_visites():
-    """Récupère le nombre total de visites"""
-    conn = sqlite3.connect('visites.db')
-    c = conn.cursor()
-    total = c.execute("SELECT COUNT(*) FROM visites").fetchone()[0]
-    conn.close()
-    return total
+    """Retourne le nombre total de visites enregistrées"""
+    if not os.path.exists("visites.csv"):
+        return 0
+    with open("visites.csv", "r") as f:
+        reader = csv.reader(f)
+        return sum(1 for _ in reader) - 1  # -1 pour l’en-tête
 
 # Initialisation de la base de données
-init_database()
+init_fichier_visites()
 
 st.set_page_config(page_title="Chatbot LycéePro", layout="centered")
 
